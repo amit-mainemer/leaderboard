@@ -1,0 +1,26 @@
+# ======================
+# Node / Server
+# ======================
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ======================
+# React / Client
+# ======================
+client/node_modules/
+client/dist/
+client/build/
+client/.env
+client/.env.local
+client/.env.*.local
+
+# ======================
