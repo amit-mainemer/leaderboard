@@ -24,3 +24,33 @@ client/.env.local
 client/.env.*.local
 
 # ======================
+# Logs
+# ======================
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# ======================
+# OS / Editor
+# ======================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ======================
+# Docker
+# ======================
+*.tar
+docker-compose.override.yml
+
+# ======================
+# Misc
+# ======================
+*.tgz
+*.bak
+*.tmp
