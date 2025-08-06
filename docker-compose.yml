@@ -1,13 +1,27 @@
 version: '3.8'
 
 services:
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: leaderboard_client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    networks:
+      - app_network
+
   server:
-    build: ./server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
     container_name: leaderboard_server
     ports:
-      - "${PORT}:${PORT}"
+      - 4000:4000
     environment:
-      - PORT=${PORT}
+      - PORT=4000
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}

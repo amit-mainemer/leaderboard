@@ -1,0 +1,30 @@
+{
+  "name": "auto-tests",
+  "version": "1.0.0",
+  "description": "Automated API tests for sunflower assignment",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "bench:users": "ts-node bench/users.bench.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "axios": "^1.6.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "setupFilesAfterEnv": [
+      "<rootDir>/setup.ts"
+    ]
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.9.0"
+  }
+}

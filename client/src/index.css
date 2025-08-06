@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('./assets/background.png');
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+}
+
+/* Global white text color for all elements */
+* {
+    color: white;
+}
+
+/* Override Material-UI default text colors */
+.MuiTypography-root {
+    color: white !important;
+}
+
+.MuiButton-root {
+    color: white !important;
+}
+
+.MuiTableCell-root {
+    color: white !important;
+}
+
+.MuiChip-root {
+    color: white !important;
+}
+
+/* Additional Material-UI component overrides */
+.MuiInputLabel-root {
+    color: white !important;
+}
+
+.MuiInputBase-input {
+    color: white !important;
+}
+
+.MuiOutlinedInput-root fieldset {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: white !important;
+}
+
+/* Ensure all text elements are white */
+p, h1, h2, h3, h4, h5, h6, span, div, label {
+    color: white !important;
+}
+
+/* Menu item styling */
+.MuiMenuItem-root {
+    background-color: #4b0082 !important;
+    color: white !important;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: #6a0dad !important;
+}
+
+.MuiMenu-paper {
+    background-color: #4b0082 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.MuiSelect-select {
+    color: white !important;
+}
+
+#root {
+    min-height: 100vh;
+}

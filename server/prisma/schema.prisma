@@ -11,6 +11,7 @@ generator client {
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @db.VarChar(50)
+  imageUrl  String?  @db.VarChar(1024)
   createdAt DateTime @default(now())
   score     Score?
 }

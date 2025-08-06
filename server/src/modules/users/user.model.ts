@@ -1,29 +1,25 @@
-import { db, redis, logger } from "../../services";
+import { db } from "../../services";
 
-export async function createUser(name: string, score: number): Promise<number> {
-  // Create user and score in one transaction
+export async function createUser(name: string, score: number, image: string): Promise<number> {
   const newUser = await db.user.create({
     data: {
       username: name,
       score: {
         create: { score }
-      }
+      },
+      imageUrl: image
     },
     include: { score: true }
   });
-
-  await redis.zadd("leaderboard", score, String(newUser.id));
-  logger.info("User created", { userId: newUser.id, name, score });
 
   return newUser.id;
 }
 
 export async function updateUserScore(
   userId: number,
-  score: number,
+  amount: number,
   action: "add" | "remove"
 ): Promise<number> {
-  // Fetch current score
   const userScore = await db.score.findUnique({
     where: { userId }
   });
@@ -32,21 +28,30 @@ export async function updateUserScore(
     throw new Error("User not found");
   }
 
-  // Calculate new score
   const newScore =
     action === "add"
-      ? userScore.score + score
-      : Math.max(0, userScore.score - score);
+      ? userScore.score + amount
+      : Math.max(0, userScore.score - amount);
 
-  // Update DB
+  console.log({ newScore, userScore, amount })
+
   await db.score.update({
     where: { userId },
     data: { score: newScore }
   });
 
-  // Update Redis
-  await redis.zadd("leaderboard", newScore, String(userId));
-  logger.info("User score updated", { userId, newScore, action });
-
   return newScore;
+}
+
+
+export async function getUsersTotalCount() {
+  const totalCount = await db.user.count();
+  return totalCount;
+}
+
+export async function getUser(userId: number): Promise<any> {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+  });
+  return user;
 }

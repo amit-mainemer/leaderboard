@@ -1,26 +1,25 @@
-# Stage 1: Build client
-FROM node:20-alpine AS client-build
-WORKDIR /client
-COPY ../client/package*.json ./
-RUN npm ci
-COPY ../client .
-RUN npm run build
+# Build stage
+FROM node:20-alpine AS build
 
-# Stage 2: Build server
-FROM node:20-alpine AS server-build
 WORKDIR /app
-COPY package*.json tsconfig.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
 
-# Stage 3: Production
-FROM node:20-alpine
-WORKDIR /app
-COPY --from=server-build /app/dist ./dist
-COPY --from=client-build /client/dist ./client/dist
-COPY package*.json ./
-RUN npm ci --only=production
+RUN mkdir client
+COPY client/package*.json ./client
 
-EXPOSE 4000
-CMD ["node", "dist/index.js"]
+RUN cd client && npm install
+
+COPY common ./common
+COPY client ./client
+
+RUN cd client && npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /app/client/dist /usr/share/nginx/html
+
+COPY client/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

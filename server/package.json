@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "nodemon --watch src --ext ts,js,json --exec ts-node -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/server/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,8 @@
     "ioredis": "^5.7.0",
     "joi": "^18.0.0",
     "pg": "^8.16.3",
-    "prisma": "^6.13.0"
+    "prisma": "^6.13.0",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.4",

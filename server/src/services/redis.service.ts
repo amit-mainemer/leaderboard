@@ -16,12 +16,6 @@ class RedisService {
       });
 
 
-        console.log("redis", {
-        host: process.env.REDIS_HOST || "localhost",
-        port: Number(process.env.REDIS_PORT) || 6379,
-      })
-
-
       RedisService.instance.on("connect", () => {
         console.log("✅ Connected to Redis");
       });

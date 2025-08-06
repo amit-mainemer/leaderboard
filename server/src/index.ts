@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
 import dotenv from "dotenv";
-import {logger} from "@/services"
+import {logger} from "./services"
 import apiRouter from "./api";
+import { errorHandler, notFoundHandler } from "./middlewares/error.middleware";
+import { registerJobs } from "./register.jobs";
 
 dotenv.config();
 
@@ -13,18 +14,16 @@ app.use(express.json());
 
 app.use(logger.expressLogger);
 
-
+// TODO: rate limiting
 // TODO: auth validations
 
-app.use("/api", apiRouter)
 
-if (process.env.NODE_ENV === "production") {
-  const clientBuildPath = path.resolve(__dirname, "../../client/dist");
-  app.use(express.static(clientBuildPath));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
-  });
-}
+app.use("/api", apiRouter);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+registerJobs();
 
 const PORT = process.env.PORT || 4000;
 

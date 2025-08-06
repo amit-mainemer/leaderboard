@@ -4,11 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently -p \"[{name}]\" -n \"server,client\" -c \"blue,green\" \"npm run dev --prefix server\" \"npm run dev --prefix client\""
+    "dev": "concurrently -p \"[{name}]\" -n \"server,client\" -c \"blue,green\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "build:common": "npm run build --prefix common",
+    "dev:common": "npm run dev --prefix common",
+    "bench:users": "npm run bench:users --prefix auto-tests",
+    "test": "npm run test --prefix auto-tests"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "workspaces": [
+    "common",
+    "client",
+    "server"
+  ],
   "dependencies": {
     "concurrently": "^9.2.0"
   }

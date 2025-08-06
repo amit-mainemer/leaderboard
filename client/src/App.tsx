@@ -1,28 +1,33 @@
-import { useState } from "react";
-import { Container, Typography, Button } from "@mui/material";
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import React from "react";
+import { Container } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { LeaderboardProvider } from "./state/leaderboard.context";
+import { ToasterProvider } from "./state/toaster.context";
+import { Users } from "./pages/Users";
+import { Home } from "./pages/Home";
+import { Navbar } from "./components/Navbar";
+import "./index.css";
+import { LeaderboardModal } from "./components/Leaderboard/LeaderboardModal";
 
-function App() {
-  const [data, setData] = useState<any[]>([]);
-
-  const fetchLeaderboard = async () => {
-    const res = await fetch("http://localhost:4000/api/leaderboard");
-    const json = await res.json();
-    setData(json);
-  };
-
+const App: React.FC = () => {
   return (
-    <Container>
-      <Typography variant="h3" gutterBottom>
-        Leaderboard <SportsEsportsIcon />
-      </Typography>
-      <Button variant="contained" onClick={fetchLeaderboard}>Load Leaderboard</Button>
-      <ul>
-        {data.map((user) => (
-          <li key={user.id}>{user.username} - {user.score}</li>
-        ))}
-      </ul>
-    </Container>
+    <Router>
+      <ToasterProvider>
+        <LeaderboardProvider>
+          <>
+            <Navbar />
+            <Container sx={{ mt: 3 }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/" element={<Navigate to="/home" replace />} />
+              </Routes>
+            </Container>
+            <LeaderboardModal />
+          </>
+        </LeaderboardProvider>
+      </ToasterProvider>
+    </Router >
   );
 }
 
