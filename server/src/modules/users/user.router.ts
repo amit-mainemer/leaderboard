@@ -19,4 +19,5 @@ usersRouter.put("/:id", validate(updateScoreSchema), asyncHandler(async (req: Re
   res.status(200).json({ newScore });
 }));
 
+
 export default usersRouter;

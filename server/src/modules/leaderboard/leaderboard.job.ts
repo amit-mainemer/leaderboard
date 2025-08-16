@@ -4,7 +4,7 @@ import { updateAllLeaderboard } from "./leaderboard.cache";
 
 let intervalId: NodeJS.Timeout | null = null;
 let isRunning = false;
-const JOB_INTERVAL = 5 * 60 * 1000; // 5 min
+const JOB_INTERVAL = 30 * 60 * 1000; // 30 min
 
 
 export async function refreshCache(): Promise<void> {

@@ -17,7 +17,6 @@ app.use(logger.expressLogger);
 // TODO: rate limiting
 // TODO: auth validations
 
-
 app.use("/api", apiRouter);
 
 app.use(notFoundHandler);
@@ -26,7 +25,8 @@ app.use(errorHandler);
 registerJobs();
 
 const PORT = process.env.PORT || 4000;
+const HOST = process.env.HOST || "localhost";
 
 app.listen(PORT, () =>
-  logger.info(`🚀 Server running on http://localhost:${PORT}`)
+  logger.info(`🚀 Server running on http://${HOST}:${PORT}`)
 );

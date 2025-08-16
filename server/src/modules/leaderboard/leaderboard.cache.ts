@@ -2,24 +2,47 @@ import { redis } from "../../services";
 import { LeaderboardUser } from "@common/types";
 
 const LEADERBOARD_KEY = "leaderboard";
+const UNKNOWN_USERNAME = "Unknown";
 
 export async function getLeaderboard(start: number, end: number): Promise<LeaderboardUser[]> {
     const data = await redis.zrevrange(LEADERBOARD_KEY, start, end, "WITHSCORES");
-    const results = [];
+    
+    if (data.length === 0) {
+        return [];
+    }
 
-
+    const results: LeaderboardUser[] = [];
+    const userIds: string[] = [];
+    
     for (let i = 0; i < data.length; i += 2) {
         const userId = data[i];
         const score = Number(data[i + 1]);
-        const redisRank = await redis.zrevrank(LEADERBOARD_KEY, userId);
-        const [username, imageUrl] = await redis.hmget(`user:${userId}`, "username", "imageUrl");
+        userIds.push(userId);
+        const rank = start + Math.floor(i / 2) + 1;
         results.push({ 
-            rank: redisRank === null ? null : redisRank + 1, 
+            rank,
             id: Number(userId), 
-            username: username || "Unknown", 
+            username: UNKNOWN_USERNAME,
             score,
-            imageUrl: imageUrl || undefined
         });
+    }
+
+    const pipeline = redis.multi();
+    for (const userId of userIds) {
+        pipeline.hmget(`user:${userId}`, "username", "imageUrl");
+    }
+    
+    const userDataResults = await pipeline.exec();
+    
+    if (userDataResults) {
+        for (let i = 0; i < userDataResults.length; i++) {
+            const userData = userDataResults[i] as [Error | null, string[]];
+            if (userData[0] === null && userData[1]) {
+                const [username, imageUrl] = userData[1];
+                results[i].username = username || UNKNOWN_USERNAME;
+                results[i].imageUrl = imageUrl && imageUrl !== "" ? imageUrl : undefined;
+            }
+        }
     }
 
     return results;

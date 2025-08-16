@@ -1,1 +1,28 @@
- 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="crownGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gemGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0080ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Crown base -->
+  <path d="M4 20 L8 12 L12 16 L16 8 L20 16 L24 12 L28 20 L28 24 L4 24 Z" 
+        fill="url(#crownGradient)" 
+        stroke="#4b0082" 
+        stroke-width="1"/>
+  
+  <!-- Crown jewels -->
+  <circle cx="8" cy="12" r="2" fill="url(#gemGradient)"/>
+  <circle cx="16" cy="8" r="2" fill="url(#gemGradient)"/>
+  <circle cx="24" cy="12" r="2" fill="url(#gemGradient)"/>
+  
+  <!-- Crown points -->
+  <path d="M6 20 L8 16 L10 20 Z" fill="#4b0082"/>
+  <path d="M14 20 L16 16 L18 20 Z" fill="#4b0082"/>
+  <path d="M22 20 L24 16 L26 20 Z" fill="#4b0082"/>
+</svg> 
